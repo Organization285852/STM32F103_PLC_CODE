@@ -1,0 +1,15 @@
+.\objects\clk.o: PLC\CLK.c
+.\objects\clk.o: .\User\stm32f10x_it.h
+.\objects\clk.o: .\User\stm32f10x.h
+.\objects\clk.o: .\CORE\core_cm3.h
+.\objects\clk.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\clk.o: .\User\system_stm32f10x.h
+.\objects\clk.o: .\User\stm32f10x_conf.h
+.\objects\clk.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h
+.\objects\clk.o: .\User\stm32f10x.h
+.\objects\clk.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h
+.\objects\clk.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h
+.\objects\clk.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
+.\objects\clk.o: .\STM32F10x_StdPeriph_Driver\inc\misc.h
+.\objects\clk.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h
+.\objects\clk.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

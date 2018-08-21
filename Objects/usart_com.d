@@ -1,0 +1,16 @@
+.\objects\usart_com.o: PLC\usart_com.c
+.\objects\usart_com.o: .\User\stm32f10x.h
+.\objects\usart_com.o: .\CORE\core_cm3.h
+.\objects\usart_com.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usart_com.o: .\User\system_stm32f10x.h
+.\objects\usart_com.o: .\User\stm32f10x_conf.h
+.\objects\usart_com.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h
+.\objects\usart_com.o: .\User\stm32f10x.h
+.\objects\usart_com.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h
+.\objects\usart_com.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h
+.\objects\usart_com.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
+.\objects\usart_com.o: .\STM32F10x_StdPeriph_Driver\inc\misc.h
+.\objects\usart_com.o: .\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h
+.\objects\usart_com.o: .\PLC\OS_Config.h
+.\objects\usart_com.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\usart_com.o: .\PLC\io.h
