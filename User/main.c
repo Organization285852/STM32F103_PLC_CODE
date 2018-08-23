@@ -27,9 +27,14 @@
 //#include <absacc.h> 
 
 
+#include "usb_lib.h"
+#include "hw_config.h"
+#include "usb_pwr.h"	
+
 u32 startup  __attribute__((at(0x2000D5F0)));
 u8 power_down;
 u8 Run_Flag=1;
+extern void data_init(void);
 extern void PLC_ProComParse(void);
 extern void init_xy(void);
 extern void  usart_init(u16 baud);
@@ -86,7 +91,7 @@ int main(void)
   Delay(6);
   //USART_DeInit(USART1);	        // 串口初始化
   Delay(6);
-  usart_init(9600);            // 串口初始化
+//  usart_init(9600);            // 串口初始化
   ADC_init();
   USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
   TIM5_Init();	                // TIMER5 定时器初始化
@@ -94,7 +99,13 @@ int main(void)
   power_down=5;
 	PBout(5) = 0;
 	PBout(5) = 1;
-	 send_test();
+	USB_Port_Set(0); 	//USB先断开
+	Delay(10000);
+	USB_Port_Set(1);	//USB再次连接
+ 	Set_USBClock();   
+ 	USB_Interrupts_Config();    
+ 	USB_Init();	
+	data_init(); 
   while (1)
   {	
 		y_refresh(); 
@@ -139,7 +150,7 @@ int main(void)
  		if(PVD)	   //MY PCB== !PVD
  		{	
  			if(Timer[0]==0)
- 			recover_data();
+				recover_data();
  			if(Timer[0]<=60000)
  			Timer[0]++;
  		}

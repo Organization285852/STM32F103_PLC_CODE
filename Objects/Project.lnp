@@ -27,6 +27,18 @@
 ".\objects\stm32f10x_tim.o"
 ".\objects\stm32f10x_rcc.o"
 ".\objects\core_cm3.o"
+".\objects\usb_core.o"
+".\objects\usb_init.o"
+".\objects\usb_int.o"
+".\objects\usb_mem.o"
+".\objects\usb_regs.o"
+".\objects\usb_sil.o"
+".\objects\hw_config.o"
+".\objects\usb_desc.o"
+".\objects\usb_endp.o"
+".\objects\usb_istr.o"
+".\objects\usb_prop.o"
+".\objects\usb_pwr.o"
 --strict --scatter ".\Objects\Project.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -14,3 +14,17 @@
 .\objects\main.o: .\PLC\OS_Config.h
 .\objects\main.o: .\Driver\i2c.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: .\USB\STM32_USB-FS-Device_Driver\inc\usb_lib.h
+.\objects\main.o: .\USB\CONFIG\hw_config.h
+.\objects\main.o: .\USB\CONFIG\platform_config.h
+.\objects\main.o: .\User\sys.h
+.\objects\main.o: .\USB\STM32_USB-FS-Device_Driver\inc\usb_type.h
+.\objects\main.o: .\USB\CONFIG\usb_conf.h
+.\objects\main.o: .\USB\STM32_USB-FS-Device_Driver\inc\usb_regs.h
+.\objects\main.o: .\USB\STM32_USB-FS-Device_Driver\inc\usb_def.h
+.\objects\main.o: .\USB\STM32_USB-FS-Device_Driver\inc\usb_core.h
+.\objects\main.o: .\USB\STM32_USB-FS-Device_Driver\inc\usb_init.h
+.\objects\main.o: .\USB\STM32_USB-FS-Device_Driver\inc\usb_sil.h
+.\objects\main.o: .\USB\STM32_USB-FS-Device_Driver\inc\usb_mem.h
+.\objects\main.o: .\USB\STM32_USB-FS-Device_Driver\inc\usb_int.h
+.\objects\main.o: .\USB\CONFIG\usb_pwr.h

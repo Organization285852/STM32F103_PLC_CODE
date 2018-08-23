@@ -17,14 +17,14 @@
 
 #define flash_start_address 0x8006000			 
 
-const signed short int  x[0x770C] __attribute__((at( flash_start_address+2)))=
+const signed short int  x[0x770C] __attribute__((at( flash_start_address+2)))= // PLC程序烧入从 flash_start_address+0x5c开始，注意大小端问题
 {
-0XBAD8,0X0000,0X0000,0X2020,0X2020,0X2020,0X2020,0X2020,0X2020,0X2020,
+0XBAD8,0X0000,0X0000,0X2020,0X2020,0X2020,0X2020,0X2020,0X2020,0X2020,     //0-0x5C byte 为PLC参数信息
 0X2020,0X2020,0X2020,0X2020,0X2020,0X2020,0X2020,0X2020,0X2020,0X2020,
 0X2020,0X2020,0X2020,0X09F4,0X0BFF,0X01F4,0X03E7,0X0E64,0X0EC7,0X0EDC,
 0X0EFF,0X0190,0X03FE,0X0000,0X0000,0X0000,0X0000,0X0000,0X0000,0X0000,
 0X0000,0X0000,0X0000,0X0000,0X0000,
-0x2400,0xC500,0X2401,0XC501,0X2402,0XC502,0X2403,0XC503,0X000F,
+0x2400,0xC500,0X2401,0XC501,0X2402,0XC502,0X2403,0XC503,0X000F,//初始测试程序
 0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,
 0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,
 0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,0XFFFF,
@@ -184,7 +184,7 @@ void usart(u16 DEFAULT_BAUD)
 }  
 
 
-void write_block(u16 number)
+void write_block(u16 number) //每一块2K
 {
 	u16 temp,wait_write,appoint_address;
 	if(number<12)			  
@@ -200,7 +200,7 @@ void write_block(u16 number)
 		FLASH_Lock();	   
 	}
 }
-
+//备份之前块的数据
 void backup_block(u16 number)		 
 {
 	u16 temp,appoint_address;
@@ -396,7 +396,7 @@ void PC_READ_Parameter(void)
 			}
 		}
 	}
-	if(prog_address>0x7fff)	
+	if(prog_address>0x7fff)	//表明读的是FLASH
 	{						
 		prog_address-=0x8000;	
 		for(temp=0;temp<data_size;temp++)
@@ -406,7 +406,7 @@ void PC_READ_Parameter(void)
 			temp_sum+=tx_data[temp*2+2]+tx_data[temp*2+3];
 		}
 	}
-	else
+	else//读的是SRAM
 	{
 		prog_address+=0x04;	
 		for(temp=0;temp<data_size;temp++)	  
@@ -509,10 +509,10 @@ void PC_WRITE_PORG(void)
 			{
 				prog_write_buffer[(prog_address+temp)-block_contol[0]*0x800]=tx_data[6+temp];  
 			}
-			else							  
+			else							  //写的不是同一块，
 			{
 				write_block(block_contol[1]);   
-				backup_block(block_contol[0]);  
+				backup_block(block_contol[0]);  //
 				block_contol[1]=block_contol[0];
 				prog_write_buffer[(prog_address+temp)-block_contol[0]*0x800]=tx_data[6+temp];
 			}
@@ -826,29 +826,42 @@ void Process_switch(void)
 		tx_data[1]=0x15,tx_count=1,rx_end=5;			 		 
 }								 
 void send_test(void);
+extern void USB_USART_SendData(u8 data);
 void  TX_Process(void)	
 {
-	u16 temp;
-	if((tx_count>0)&&(rx_end==0x00))  
+	u16 temp=0;
+	//使用USART
+//	if((tx_count>0)&&(rx_end==0x00))  
+//	{
+//		USART_SendData(USART1,(0x80|(tx_data[1]))); 
+//		USART_ITConfig(USART1,USART_IT_TC,ENABLE); 
+//		for(temp=0;temp<tx_count;temp++)
+//		{ 
+//			tx_data[temp]=tx_data[temp+1];
+//		}
+//		tx_count--;								 
+//	}
+//	else
+//		USART_ITConfig(USART1,USART_IT_TC,DISABLE); 
+		
+	//使用USB
+	if(rx_end==0x00)
 	{
-		USART_SendData(USART1,(0x80|(tx_data[1]))); 
-		USART_ITConfig(USART1,USART_IT_TC,ENABLE); 
-		for(temp=0;temp<tx_count;temp++)
-		{ 
-			tx_data[temp]=tx_data[temp+1];
-		}
-		tx_count--;								 
+		while(tx_count)
+		{
+			USB_USART_SendData(tx_data[temp+1]);
+			tx_count--;		
+			temp++;
+		
+		}	
 	}
-	else
-		USART_ITConfig(USART1,USART_IT_TC,DISABLE);  
 }
 
-			  		 
-void RX_Process(void)
+			  		
+void RX_Process(char res)
 { 
   static u8 f=1;	  //ADD 传人记
-	rx_data[0]=0x7f&USART_ReceiveData(USART1);
-
+	rx_data[0]=0x7f&res;
 
 	if(rx_data[0]==0X05)	
   {
@@ -900,7 +913,7 @@ void USART1_IRQHandler(void)
 	if(USART_GetITStatus(USART1,USART_IT_RXNE)==SET)  
 	{
 		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-		RX_Process();
+		RX_Process(USART_ReceiveData(USART1));
 	}	
 	if(USART_GetFlagStatus(USART1,USART_FLAG_ORE)==SET)
 	{

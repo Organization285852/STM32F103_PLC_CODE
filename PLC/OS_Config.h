@@ -55,9 +55,9 @@
 //Êä³öY¶¨Òå
 #define Y00 PBout(5)    
 #define Y01 PEout(5)
-#define Y02 PAout(11)
-#define Y03 PAout(12)
-#define Y04 PAout(11)   
+#define Y02 PCout(11)
+#define Y03 PCout(12)
+#define Y04 PCout(11)   
 #define Y05 PCout(10) 
 #define Y06 PCout(11) 
 #define Y07 PCout(12)

@@ -34,7 +34,7 @@ extern void timer_enable(u16 timer_number);
 extern void timer_disble(u16 timer_number);	 
 extern void RST_T_D_C_M_data(void);
 extern void backup_data(void);
-static u16 *p_data,process_value;
+static u16 process_value;
 static const u16 *p_prog;
 static u8 T_number,C_number;
 static u16 T_value,C_value;
@@ -84,7 +84,7 @@ void reset_step(u16 addr)
 
 static void LD(u16 start_addr,u8 process_addr)	
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if((*p_data&(1<<temp2))==(1<<temp2)) 
@@ -99,7 +99,7 @@ static void LD(u16 start_addr,u8 process_addr)
 
 static u8 LDF(u16 start_addr,u8 process_addr)	  
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if((*p_data&(1<<temp2))==(1<<temp2)) 
@@ -110,7 +110,7 @@ static u8 LDF(u16 start_addr,u8 process_addr)
 
 static void LDI(u16 start_addr,u8 process_addr)
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if((*p_data&(1<<temp2))==(1<<temp2)) 
@@ -126,6 +126,7 @@ static void LDI(u16 start_addr,u8 process_addr)
 void AND(u16 start_addr,u8 process_addr)
 {
 	u16 temp2;
+	u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if(((*p_data&(1<<temp2))==(1<<temp2))&&((process_value&0X01)==0X01)) 
@@ -137,7 +138,7 @@ void AND(u16 start_addr,u8 process_addr)
 
 static void ANI(u16 start_addr,u8 process_addr)
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if((!((*p_data&(1<<temp2))==(1<<temp2)))&&((process_value&0X01)==0X01)) 
@@ -148,7 +149,7 @@ static void ANI(u16 start_addr,u8 process_addr)
 
 static void OR(u16 start_addr,u8 process_addr)
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if(((*p_data&(1<<temp2))==(1<<temp2))||((process_value&0X01)==0X01)) 
@@ -157,12 +158,9 @@ static void OR(u16 start_addr,u8 process_addr)
 	process_value&=~0X01; 
 }
 
-
-
-
 static void ORI(u16 start_addr,u8 process_addr)
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if((!((*p_data&(1<<temp2))==(1<<temp2)))||((process_value&0X01)==0X01)) 
@@ -173,7 +171,7 @@ static void ORI(u16 start_addr,u8 process_addr)
 
 static void OUT(u16 start_addr,u8 process_addr)
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if((process_value&0X01)==0X01)
@@ -188,7 +186,7 @@ static void OUT(u16 start_addr,u8 process_addr)
 
 void force_set(u16 start_addr,u8 process_addr)  
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	*p_data|=(1<<temp2);
@@ -196,7 +194,7 @@ void force_set(u16 start_addr,u8 process_addr)
 
 static void BIT_SET(u16 start_addr,u8 process_addr)	
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if((process_value&0X01)==0X01)
@@ -205,7 +203,7 @@ static void BIT_SET(u16 start_addr,u8 process_addr)
 
 void force_reset(u16 start_addr,u8 process_addr) 
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	*p_data&=~(1<<temp2);
@@ -213,7 +211,7 @@ void force_reset(u16 start_addr,u8 process_addr)
 			 
 static void RST(u16 start_addr,u8 process_addr)	
 {
-	u16 temp2;
+	u16 temp2;u16 *p_data;
 	p_data=all_data+start_addr+process_addr/0x10;   
 	temp2=process_addr%0x10;
 	if((process_value&0X01)==0X01)
@@ -448,6 +446,7 @@ static void RESET_T(u8 process_addr)
 
 static void RESET_C(u8 process_addr) 	   
 { 
+	u16 *p_data;
 	if((process_value&0x01)==0x01) 		   
 	{ 
 		p_data=all_data+0x0500+process_addr;  
@@ -1619,6 +1618,7 @@ static void extend_function(void)
 
 static void enable_T_K(void)
 {
+	u16 *p_data;
 	T_value=*p_prog%0x100;   
 	p_prog++;
 	T_value+=(*p_prog%0x100)*0x100;  
@@ -1630,6 +1630,7 @@ static void enable_T_K(void)
 
 static void enable_T_D(void)
 {
+	u16 *p_data;
 	p_data=all_data+0x1000+T_number;
 	*p_data=all_data[0x2000+T_value];
 	timer_enable(T_number);
@@ -1679,6 +1680,7 @@ static void operation_T(void)
 
 static void enable_C_K(void)	   
 {
+	u16 *p_data;
 	u16 temp_bit,*p_C_enable_coil;
 	C_value=*p_prog%0x100;           
 	p_prog++;
@@ -1706,6 +1708,7 @@ static void enable_C_K(void)
 
 static void enable_C_D(void)	  
 {
+	u16 *p_data;
 	u16 temp_bit,*p_C_enable_coil;
 	C_value=all_data[0x2000+C_value];
 	p_data=all_data+0x0500+C_number;
@@ -1726,6 +1729,7 @@ static void enable_C_D(void)
 
 static void disable_C_K(void)
 {
+	u16 *p_data;
 	C_value=*p_prog%0x100;           
 	p_prog++;
 	C_value+=(*p_prog%0x100)*0x100;  
@@ -1745,6 +1749,7 @@ static void disable_C_K(void)
 
 static void disable_C_D(void)	   
 {
+	u16 *p_data;
 	u16 temp_bit,*p_C_enable_coil;
 	C_value=all_data[0x2000+C_value];
 	p_data=all_data+0x0500+C_number;
@@ -1827,9 +1832,9 @@ u8 find_toend(void)
 		temp++;
 	}while((!(*p_prog==0x000f))&&(temp<7998)); 
 	if(temp>7997)
-	return 1;
+		return 1;
 	else		  
-	return 0;
+		return 0;
 }
 
 void PLC_ProComParse(void)		 //20151009
@@ -1837,7 +1842,7 @@ void PLC_ProComParse(void)		 //20151009
 	u8  temp5,run_keep;
 	static u8  puls;
 	program_start_addr=x+0x5c/2-1;     
-	run_keep=p_all_data[0X01C4];  
+	run_keep=p_all_data[0X01C4];  //对应all_data[0x00E0]
 	Err = 1; 
 	RST_Y(); 
 	
@@ -1850,25 +1855,24 @@ void PLC_ProComParse(void)		 //20151009
 			run_keep=0x09;
 		}
 		
-		
 		if(run_keep==0x09)			  
 		{
 			Run=0;
-			force_set(0X00E0,0);	 
-			force_reset(0X00E0,1);	
+			force_set(0X00E0,0);	 //M8000 监视 PLC运行 ON
+			force_reset(0X00E0,1); //M8000 监视 PLC运行 OFF
 			if(edit_prog==0x00)		 
 			{ 
 				find_p(),edit_prog=1;
-				if(find_toend())
+				if(find_toend()) 
 				{  
-					p_all_data[0X01C4]=9;
-					goto all_end;  
+					p_all_data[0X01C4]=9; // p_all_data 是8位的数据指针，超前 16位的all_data指针
+					goto all_end;  //没有程序
 				}
 			}
 			if(puls==0x00)		 
-			force_set(0X00E0,2),force_reset(0X00E0,3);
-			p_prog=x+0x5c/2-1;
-			all_data[0x070C]=20;        
+				force_set(0X00E0,2),force_reset(0X00E0,3); // M8002 ,M8003初始化脉冲
+			p_prog=x+0x5c/2-1; //程序烧写的起始地址是0x805C(8位)，p_prog为16为指针
+			all_data[0x070C]=20;      //？？？？  
 			do
 			{
 				temp5=*p_prog/0x100;
@@ -2046,9 +2050,9 @@ void PLC_ProComParse(void)		 //20151009
 		else
 		{ 
 			RST_Y();               // 如果从运行壮态切换到停止壮态，需要清除Y输出
-			force_reset(0X00E0,0); // 没有运行强制M80000为OFF 
-			force_set(0X00E0,1);	 // 没有运行强制M80001为ON  
-			all_data[0x070C]=0; 
+			force_reset(0X00E0,0); // 没有运行强制M8000为OFF 
+			force_set(0X00E0,1);	 // 没有运行强制M8001为ON  
+			all_data[0x070C]=0;    //D8012
 			edit_prog=0;	         // 编程时要用到
 			puls=0;                // 初始化脉冲用到8002 8003
 			Run=1;
@@ -2070,6 +2074,6 @@ void PLC_ProComParse(void)		 //20151009
 		}		
 		Run=1;
 	}	
-	all_data[0X701]=0X01;		
+	all_data[0X0701]=0X01;		//D8001
 }
 
