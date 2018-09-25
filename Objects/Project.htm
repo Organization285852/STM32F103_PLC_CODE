@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Wed Aug 22 18:32:10 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue Sep 25 18:14:18 2018
 <BR><P>
 <H3>Maximum Stack Usage =        164 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -558,7 +558,7 @@ Global Symbols
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;extend_AND_M
 </UL>
 
-<P><STRONG><a name="[77]"></a>BSP_config</STRONG> (Thumb, 424 bytes, Stack size 8 bytes, bsp.o(i.BSP_config))
+<P><STRONG><a name="[77]"></a>BSP_config</STRONG> (Thumb, 230 bytes, Stack size 8 bytes, bsp.o(i.BSP_config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = BSP_config &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
@@ -1314,20 +1314,20 @@ Global Symbols
 <LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[de]"></a>USB_Cable_Config</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, hw_config.o(i.USB_Cable_Config))
-<BR><BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PowerOn
-</UL>
-
-<P><STRONG><a name="[18]"></a>UsageFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_it.o(i.UsageFault_Handler))
-<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
-</UL>
-<P><STRONG><a name="[a]"></a>Virtual_Com_Port_Status_Out</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, usb_prop.o(i.Virtual_Com_Port_Status_Out))
-<BR>[Address Reference Count : 1]<UL><LI> usb_prop.o(.data)
-</UL>
 <P><STRONG><a name="[116]"></a>T_100MS</STRONG> (Thumb, 130 bytes, Stack size 12 bytes, clk.o(i.T_100MS))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = T_100MS
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM5_IRQHandler
+</UL>
+
+<P><STRONG><a name="[129]"></a>USART_ClearFlag</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_ClearFlag))
+<BR><BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+</UL>
+
+<P><STRONG><a name="[126]"></a>USART_ClearITPendingBit</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, stm32f10x_usart.o(i.USART_ClearITPendingBit))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_ClearITPendingBit
+</UL>
+<BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[115]"></a>T_10MS</STRONG> (Thumb, 130 bytes, Stack size 12 bytes, clk.o(i.T_10MS))
@@ -1362,16 +1362,6 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[129]"></a>USART_ClearFlag</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_ClearFlag))
-<BR><BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
-</UL>
-
-<P><STRONG><a name="[126]"></a>USART_ClearITPendingBit</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, stm32f10x_usart.o(i.USART_ClearITPendingBit))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_ClearITPendingBit
-</UL>
-<BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
-</UL>
-
 <P><STRONG><a name="[138]"></a>USART_Config</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, hw_config.o(i.USART_Config))
 <BR><BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Virtual_Com_Port_Status_In
 </UL>
@@ -1404,6 +1394,10 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
+<P><STRONG><a name="[de]"></a>USB_Cable_Config</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, hw_config.o(i.USB_Cable_Config))
+<BR><BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PowerOn
+</UL>
+
 <P><STRONG><a name="[181]"></a>USB_Init</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, usb_init.o(i.USB_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USB_Init
 </UL>
@@ -1472,6 +1466,9 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TX_Process
 </UL>
 
+<P><STRONG><a name="[18]"></a>UsageFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_it.o(i.UsageFault_Handler))
+<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
+</UL>
 <P><STRONG><a name="[95]"></a>UserToPMABufferCopy</STRONG> (Thumb, 52 bytes, Stack size 20 bytes, usb_mem.o(i.UserToPMABufferCopy))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = UserToPMABufferCopy
 </UL>
@@ -1544,6 +1541,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Config
 </UL>
+<BR>[Address Reference Count : 1]<UL><LI> usb_prop.o(.data)
+</UL>
+<P><STRONG><a name="[a]"></a>Virtual_Com_Port_Status_Out</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, usb_prop.o(i.Virtual_Com_Port_Status_Out))
 <BR>[Address Reference Count : 1]<UL><LI> usb_prop.o(.data)
 </UL>
 <P><STRONG><a name="[7]"></a>Virtual_Com_Port_init</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, usb_prop.o(i.Virtual_Com_Port_init))
@@ -1838,7 +1838,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;backup_data
 </UL>
 
-<P><STRONG><a name="[119]"></a>x_filter</STRONG> (Thumb, 1072 bytes, Stack size 0 bytes, bsp.o(i.x_filter))
+<P><STRONG><a name="[119]"></a>x_filter</STRONG> (Thumb, 700 bytes, Stack size 0 bytes, bsp.o(i.x_filter))
 <BR><BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM5_IRQHandler
 </UL>
 
@@ -1846,7 +1846,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[17f]"></a>y_refresh</STRONG> (Thumb, 230 bytes, Stack size 0 bytes, bsp.o(i.y_refresh))
+<P><STRONG><a name="[17f]"></a>y_refresh</STRONG> (Thumb, 242 bytes, Stack size 0 bytes, bsp.o(i.y_refresh))
 <BR><BR>[Called By]<UL><LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_xy
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>

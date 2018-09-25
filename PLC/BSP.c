@@ -15,113 +15,78 @@ void y_refresh(void);
 void BSP_config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO ,  ENABLE); 
+	//RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO ,  ENABLE); 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOC|RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE, ENABLE);
 //	y_refresh();
 	
 	//GPIO_PinRemapConfig(GPIO_Remap_SWJ_Disable , ENABLE);  //失能（JTAG+SW-DP）释放I/O
 	
 
-	//define X00-X14
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_6 | GPIO_Pin_7;	
+	//define X00-X07
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 ;	
 	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_IN_FLOATING;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
 	GPIO_Init(GPIOA,&GPIO_InitStructure);
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12| GPIO_Pin_13;
 	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_IN_FLOATING;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
 	GPIO_Init(GPIOB,&GPIO_InitStructure);		
-	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
-	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_IN_FLOATING;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+	//define Y00-Y07
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7| GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_11 | GPIO_Pin_12;
+	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_Out_OD;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_Init(GPIOC,&GPIO_InitStructure);			
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
-	GPIO_InitStructure.GPIO_Mode =   GPIO_Mode_IPU;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12;
+	GPIO_InitStructure.GPIO_Mode =   GPIO_Mode_Out_OD;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-	GPIO_Init(GPIOE,&GPIO_InitStructure);	
+	GPIO_Init(GPIOA,&GPIO_InitStructure);	
 		
-	//define Y00-Y15
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
-	GPIO_Init(GPIOE, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 ;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_6 | GPIO_Pin_7;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 ;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_2 ;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_Init(GPIOD, &GPIO_InitStructure);
-	
-    //define EEPROM
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10|GPIO_Pin_11;	   //EEPROM
+
+  //define EEPROM
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7|GPIO_Pin_6;	   //EEPROM
 	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_Out_OD;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
 	GPIO_Init(GPIOB,&GPIO_InitStructure);
 
-    //define OTHER IO
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;	       //SHUTDOWN
+  //define OTHER IO
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14;	       //RUN/STOP_SWITCH
 	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_IN_FLOATING;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-	GPIO_Init(GPIOA,&GPIO_InitStructure);
-
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;	       //RUN/STOP_SWITCH
-	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_IN_FLOATING;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-	GPIO_Init(GPIOC,&GPIO_InitStructure);
-
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9;  //RUN_LED  ERR_LED
-	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_Out_OD;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
 	GPIO_Init(GPIOB,&GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7 |GPIO_Pin_8; //文本显示
-  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;  //RUN_LED  
+	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_Out_OD;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+	GPIO_Init(GPIOD,&GPIO_InitStructure);
+	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_8 | GPIO_Pin_9;  // ERR_LED LEDR485_1_2
+	GPIO_InitStructure.GPIO_Mode =  GPIO_Mode_Out_OD;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+	GPIO_Init(GPIOB,&GPIO_InitStructure);
   	
 }
 
-void x_filter(void)			//每　1ms  需调用一次，用于X滤波，暂定为20MS
-  {	
-     static signed char x_buffer[20];    //暂定刷新20个X 
- 		           u8 temp=0;
+void x_filter(void)			//每　1ms  需调用一次，用于X滤波，暂定为10MS
+{	
+	static signed char x_buffer[20];    //暂定刷新20个X 
+	u8 temp=0;
 	 
-     if(!X0)
-	 	   	{
-			   if(x_buffer[temp]<10)
-			      x_buffer[temp]++;  
-			   else
-			      in_x|=1;
-			 }
-	  else
-			 {
-			    if(x_buffer[temp]>-10)
-			       x_buffer[temp]--;  
-			    else
-	 		       in_x&=~1;
-			  }
+	if(!X0)
+	{
+		if(x_buffer[temp]<10) //10次
+			x_buffer[temp]++;  
+		else
+			in_x|=1;
+	}
+	else
+	{
+		if(x_buffer[temp]>-10)
+			x_buffer[temp]--;  
+		else
+			in_x&=~1;
+	}
 	     temp++;
      if(!X1)
 	    {if(x_buffer[temp]<10)
@@ -217,67 +182,67 @@ void x_filter(void)			//每　1ms  需调用一次，用于X滤波，暂定为20MS
 		      in_x&=~(1<<temp);
 		 }
 		temp++;
-		//*****************
-     if(!X10)
-	   	 {
-		  if(x_buffer[temp]<10)
-		     x_buffer[temp]++;  
-		   else
-	   	     in_x|=1<<temp;
-		  }
-    else
-		 {
-		   if(x_buffer[temp]>-10)
-		      x_buffer[temp]--;  
-		   else
-		      in_x&=~(1<<temp);
-		 }
-		temp++;
-     if(!X11)
-	   	 {
-		  if(x_buffer[temp]<10)
-		     x_buffer[temp]++;  
-		   else
-	   	     in_x|=1<<temp;
-		  }
-    else
-		 {
-		   if(x_buffer[temp]>-10)
-		      x_buffer[temp]--;  
-		   else
-		      in_x&=~(1<<temp);
-		 }
-		temp++;
-     if(!X12)
-	   	 {
-		  if(x_buffer[temp]<10)
-		     x_buffer[temp]++;  
-		   else
-	   	     in_x|=1<<temp;
-		  }
-    else
-		 {
-		   if(x_buffer[temp]>-10)
-		      x_buffer[temp]--;  
-		   else
-		      in_x&=~(1<<temp);
-		 }
-		temp++;
-    if(!X13)
-	   	 {
-		  if(x_buffer[temp]<10)
-		     x_buffer[temp]++;  
-		   else
-	   	     in_x|=1<<temp;
-		  }
-    else
-		 {
-		   if(x_buffer[temp]>-10)
-		      x_buffer[temp]--;  
-		   else
-		      in_x&=~(1<<temp);
-		 }
-		temp++;
+//		//*****************
+//     if(!X10)
+//	   	 {
+//		  if(x_buffer[temp]<10)
+//		     x_buffer[temp]++;  
+//		   else
+//	   	     in_x|=1<<temp;
+//		  }
+//    else
+//		 {
+//		   if(x_buffer[temp]>-10)
+//		      x_buffer[temp]--;  
+//		   else
+//		      in_x&=~(1<<temp);
+//		 }
+//		temp++;
+//     if(!X11)
+//	   	 {
+//		  if(x_buffer[temp]<10)
+//		     x_buffer[temp]++;  
+//		   else
+//	   	     in_x|=1<<temp;
+//		  }
+//    else
+//		 {
+//		   if(x_buffer[temp]>-10)
+//		      x_buffer[temp]--;  
+//		   else
+//		      in_x&=~(1<<temp);
+//		 }
+//		temp++;
+//     if(!X12)
+//	   	 {
+//		  if(x_buffer[temp]<10)
+//		     x_buffer[temp]++;  
+//		   else
+//	   	     in_x|=1<<temp;
+//		  }
+//    else
+//		 {
+//		   if(x_buffer[temp]>-10)
+//		      x_buffer[temp]--;  
+//		   else
+//		      in_x&=~(1<<temp);
+//		 }
+//		temp++;
+//    if(!X13)
+//	   	 {
+//		  if(x_buffer[temp]<10)
+//		     x_buffer[temp]++;  
+//		   else
+//	   	     in_x|=1<<temp;
+//		  }
+//    else
+//		 {
+//		   if(x_buffer[temp]>-10)
+//		      x_buffer[temp]--;  
+//		   else
+//		      in_x&=~(1<<temp);
+//		 }
+//		temp++;
 //    if(!X14)
 //	   	 {
 //		  if(x_buffer[temp]<10)

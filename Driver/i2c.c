@@ -6,11 +6,11 @@
 /********************************************************/
 
 #include "i2c.h"
-#define IIC_SDA_DAT GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11)
-#define IIC_SDA_L   GPIO_ResetBits(GPIOB, GPIO_Pin_11)
-#define IIC_SDA_H   GPIO_SetBits(GPIOB, GPIO_Pin_11)
-#define IIC_SCL_L   GPIO_ResetBits(GPIOB, GPIO_Pin_10)
-#define IIC_SCL_H   GPIO_SetBits(GPIOB, GPIO_Pin_10)
+#define IIC_SDA_DAT GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_7)
+#define IIC_SDA_L   GPIO_ResetBits(GPIOB, GPIO_Pin_7)
+#define IIC_SDA_H   GPIO_SetBits(GPIOB, GPIO_Pin_7)
+#define IIC_SCL_L   GPIO_ResetBits(GPIOB, GPIO_Pin_6)
+#define IIC_SCL_H   GPIO_SetBits(GPIOB, GPIO_Pin_6)
 
 void delay_5us(u16 num)//Âú×ãIICÊ±ÐòµÄÑÓÊ±
 {
